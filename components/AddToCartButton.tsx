@@ -12,7 +12,7 @@ const AddToCartButton = ({ product }: AddToCartButtonProps) => {
 
   return (
     <button 
-      onClick={() => addToCart(product)}
+      onClick={() => addToCart(product as any)}
       disabled={product.countInStock === 0}
       className={`w-full py-3 rounded-md font-semibold transition-colors ${
         product.countInStock > 0 
