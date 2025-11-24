@@ -74,7 +74,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-16 gap-y-32">
             {products.map((product) => (
-              <ProductCard key={product._id as string} product={product} />
+              <ProductCard key={product._id as unknown as string} product={product} />
             ))}
           </div>
         )}
