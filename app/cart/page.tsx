@@ -48,7 +48,7 @@ const CartPage = () => {
             <div className="border-t border-white/10">
               <ul className="divide-y divide-white/10">
                 {cart.map((item) => (
-                  <li key={item._id as string} className="py-10 flex items-center gap-8">
+                  <li key={item._id as unknown as string} className="py-10 flex items-center gap-8">
                     <div className="relative h-48 w-36 flex-shrink-0 bg-white/5 border border-white/10">
                       <Image
                         src={item.image}
@@ -61,7 +61,7 @@ const CartPage = () => {
                     <div className="flex-1">
                       <div className="flex justify-between items-start mb-2">
                         <div>
-                          <Link href={`/product/${item._id}`} className="text-lg font-black uppercase tracking-tighter text-white hover:text-blue-500 transition-colors italic">
+                          <Link href={`/product/${item._id as unknown as string}`} className="text-lg font-black uppercase tracking-tighter text-white hover:text-blue-500 transition-colors italic">
                             {item.name}
                           </Link>
                           <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em] font-bold mt-1">{item.category}</p>
@@ -72,14 +72,14 @@ const CartPage = () => {
                       <div className="flex items-center justify-between mt-8">
                         <div className="flex items-center border border-white/20 bg-white/5">
                           <button 
-                            onClick={() => updateQuantity(item._id as string, item.quantity - 1)}
+                            onClick={() => updateQuantity(item._id as unknown as string, item.quantity - 1)}
                             className="p-3 text-white hover:text-blue-500 transition-colors"
                           >
                             <Minus className="w-3 h-3" />
                           </button>
                           <span className="px-6 text-sm font-bold border-x border-white/20">{item.quantity}</span>
                           <button 
-                            onClick={() => updateQuantity(item._id as string, item.quantity + 1)}
+                            onClick={() => updateQuantity(item._id as unknown as string, item.quantity + 1)}
                             className="p-3 text-white hover:text-blue-500 transition-colors"
                           >
                             <Plus className="w-3 h-3" />
@@ -87,7 +87,7 @@ const CartPage = () => {
                         </div>
                         
                         <button 
-                          onClick={() => removeFromCart(item._id as string)}
+                          onClick={() => removeFromCart(item._id as unknown as string)}
                           className="flex items-center space-x-2 text-red-500 hover:text-red-400 transition-colors"
                         >
                           <Trash2 className="w-4 h-4" />
