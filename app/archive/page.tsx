@@ -39,7 +39,7 @@ export default async function ArchivePage() {
           <h2 className="text-xs font-bold uppercase tracking-[0.4em] text-white/40 mb-8">Older Designs</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-16 gap-y-32">
             {olderDesigns.slice(0, 8).map(p => (
-              <Link key={p._id as string} href={`/product/${p._id}`} className="group block">
+              <Link key={p._id as unknown as string} href={`/product/${p._id}`} className="group block">
                 <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
                   <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute bottom-3 left-3 text-[9px] font-bold uppercase tracking-[0.3em] text-white/60">
@@ -56,7 +56,7 @@ export default async function ArchivePage() {
           <h2 className="text-xs font-bold uppercase tracking-[0.4em] text-white/40 mb-8">High Demand</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-16 gap-y-32">
             {highDemand.map(p => (
-              <Link key={p._id as string} href={`/product/${p._id}`} className="group block">
+              <Link key={p._id as unknown as string} href={`/product/${p._id}`} className="group block">
                 <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
                   <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute top-3 right-3 text-[8px] font-bold text-white uppercase tracking-[0.3em] bg-black/40 backdrop-blur-md px-2 py-1">
@@ -73,7 +73,7 @@ export default async function ArchivePage() {
           <h2 className="text-xs font-bold uppercase tracking-[0.4em] text-white/40 mb-8">Running Out</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-16 gap-y-32">
             {runningOut.map(p => (
-              <Link key={p._id as string} href={`/product/${p._id}`} className="group block">
+              <Link key={p._id as unknown as string} href={`/product/${p._id}`} className="group block">
                 <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
                   <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute top-3 right-3 text-[8px] font-bold text-white uppercase tracking-[0.3em] bg-black/40 backdrop-blur-md px-2 py-1">
@@ -90,7 +90,7 @@ export default async function ArchivePage() {
           <h2 className="text-xs font-bold uppercase tracking-[0.4em] text-white/40 mb-8">Rare Drops</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-16 gap-y-32">
             {rareDrops.map(p => (
-              <div key={p._id as string} className="group">
+              <div key={p._id as unknown as string} className="group">
                 <RevealCard product={p as any} />
               </div>
             ))}
