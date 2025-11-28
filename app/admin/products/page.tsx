@@ -5,11 +5,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Plus, Trash2, Edit2, ChevronLeft, Package, Save, ChevronDown } from 'lucide-react';
-import { IProduct, IVariation } from '@/models/Product';
+import { IProductData, IVariation } from '@/models/Product';
 
 const AdminProductsPage = () => {
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
+  const [products, setProducts] = useState<IProductData[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<IProductData[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -44,7 +44,7 @@ const AdminProductsPage = () => {
       p.name.toLowerCase().includes(search.toLowerCase()) ||
       p.fit.toLowerCase().includes(search.toLowerCase()) ||
       p.wash.toLowerCase().includes(search.toLowerCase()) ||
-      p._id.toLowerCase().includes(search.toLowerCase())
+      (p._id && p._id.toLowerCase().includes(search.toLowerCase()))
     );
     setFilteredProducts(filtered);
   }, [search, products]);
@@ -241,111 +241,115 @@ const AdminProductsPage = () => {
               <span>Actions</span>
             </div>
             <div className="divide-y divide-white/10">
-              {filteredProducts.map((p) => (
-                <div key={p._id} className="px-4 py-4">
-                  <div className="grid grid-cols-[80px_1.8fr_1fr_0.9fr_1fr_220px] items-center gap-4">
-                    <div className="relative h-16 w-12 bg-white/5 border border-white/10">
-                      <Image src={p.image} alt={p.name} fill className="object-cover" />
-                    </div>
-                    <div>
-                      <div className="text-[10px] font-bold uppercase tracking-[0.3em] text-white">{p.name}</div>
-                      <div className="text-[8px] text-white/40 uppercase tracking-[0.2em] italic">{p.fit} / {p.wash} / {p.gender}</div>
-                      <div className="mt-1 text-[8px] text-white/50 uppercase tracking-[0.2em]">
-                        <span className="mr-3">Material: {p.material}</span>
-                        <span className="mr-3">Rating: {(p.rating || 0).toFixed(1)}</span>
-                        <span>Reviews: {p.numReviews || 0}</span>
+              {filteredProducts.map((p) => {
+                if (!p._id) return null;
+                const pId = p._id;
+                return (
+                  <div key={pId} className="px-4 py-4">
+                    <div className="grid grid-cols-[80px_1.8fr_1fr_0.9fr_1fr_220px] items-center gap-4">
+                      <div className="relative h-16 w-12 bg-white/5 border border-white/10">
+                        <Image src={p.image} alt={p.name} fill className="object-cover" />
                       </div>
-                      <div className="mt-1 text-[8px] text-white/50 uppercase tracking-[0.2em]">
-                        <span className="mr-3">Colors: {(p.colors || []).join(', ')}</span>
-                        <span className="mr-3">Waist: {(p.waistSizes || []).join(', ')}</span>
-                        <span>Length: {(p.lengthSizes || []).join(', ')}</span>
-                      </div>
-                    </div>
-                    <div className="text-[8px] text-white/60 uppercase tracking-[0.2em]">{p.category}</div>
-                    <div className="text-[10px] font-black text-white italic tracking-tighter">${p.price.toFixed(2)}</div>
-                    <div className="text-[8px] font-bold uppercase tracking-[0.3em]">
-                      {(() => {
-                        const total = (p.variations && p.variations.length > 0) ? p.variations.reduce((s: number, v: IVariation) => s + (v.countInStock || 0), 0) : (p.countInStock || 0);
-                        return <span className={total < 10 ? 'text-red-500' : 'text-white/60'}>{total} UNITS</span>;
-                      })()}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <button onClick={() => router.push(`/admin/products/edit/${p._id}`)} className="px-3 py-2 bg-white/10 border border-white/20 text-white hover:bg-white/20 transition" title="Edit">
-                        <Edit2 className="w-3 h-3" />
-                      </button>
-                      <button onClick={() => deleteProduct(p._id)} className="px-3 py-2 bg-white/10 border border-white/20 text-white hover:bg-white/20 transition" title="Remove">
-                        <Trash2 className="w-3 h-3" />
-                      </button>
-                      <button onClick={() => saveProduct(p._id)} className="px-3 py-2 bg-white text-black hover:bg-blue-500 hover:text-white transition font-black text-[9px] uppercase tracking-[0.3em]" title="Save">
-                        <Save className="w-3 h-3" />
-                      </button>
-                      <button onClick={() => setExpanded(expanded === p._id ? null : p._id)} className="px-3 py-2 bg-white/10 border border-white/20 text-white hover:bg-white/20 transition" title="Toggle Details">
-                        <ChevronDown className={`w-3 h-3 transition-transform ${expanded === p._id ? 'rotate-180' : ''}`} />
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <div className={`mt-4 overflow-hidden transition-all ${expanded === p._id ? 'max-h-[1000px]' : 'max-h-0'}`}>
-                    <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_80px] gap-4 items-end p-4 bg-white/5 border border-white/10">
-                      <div className="text-[8px] font-bold uppercase tracking-[0.3em] text-white/40 md:col-span-7">Variations</div>
-                      {(p.variations || []).map((v: any, idx: number) => (
-                        <div key={idx} className="contents">
-                          <div>
-                            <label className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">SKU</label>
-                            <input value={v.sku} onChange={(e) => updateVariationField(p._id, idx, 'sku', e.target.value)} className="w-full bg-transparent text-white text-[10px] border-b border-white/10 focus:outline-none" />
-                          </div>
-                          <div>
-                            <label className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">Color</label>
-                            <input value={v.color} onChange={(e) => updateVariationField(p._id, idx, 'color', e.target.value)} className="w-full bg-transparent text-white text-[10px] border-b border-white/10 focus:outline-none" />
-                          </div>
-                          <div>
-                            <label className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">Waist</label>
-                            <input type="number" value={v.waistSize} onChange={(e) => updateVariationField(p._id, idx, 'waistSize', parseInt(e.target.value))} className="w-full bg-transparent text-white text-[10px] border-b border-white/10 focus:outline-none" />
-                          </div>
-                          <div>
-                            <label className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">Length</label>
-                            <input type="number" value={v.lengthSize} onChange={(e) => updateVariationField(p._id, idx, 'lengthSize', parseInt(e.target.value))} className="w-full bg-transparent text-white text-[10px] border-b border-white/10 focus:outline-none" />
-                          </div>
-                          <div>
-                            <label className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">Price</label>
-                            <input type="number" value={v.price} onChange={(e) => updateVariationField(p._id, idx, 'price', parseFloat(e.target.value))} className="w-full bg-transparent text-white text-[10px] border-b border-white/10 focus:outline-none" />
-                          </div>
-                          <div>
-                            <label className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">Stock</label>
-                            <input type="number" value={v.countInStock} onChange={(e) => updateVariationField(p._id, idx, 'countInStock', parseInt(e.target.value))} className="w-full bg-transparent text-white text-[10px] border-b border-white/10 focus:outline-none" />
-                          </div>
-                          <div className="flex items-end">
-                            <button onClick={() => removeVariation(p._id, idx)} className="px-3 py-2 bg-white/10 border border-white/20 text-white hover:bg-white/20 transition" title="Remove Variation">
-                              <Trash2 className="w-3 h-3" />
-                            </button>
-                          </div>
+                      <div>
+                        <div className="text-[10px] font-bold uppercase tracking-[0.3em] text-white">{p.name}</div>
+                        <div className="text-[8px] text-white/40 uppercase tracking-[0.2em] italic">{p.fit} / {p.wash} / {p.gender}</div>
+                        <div className="mt-1 text-[8px] text-white/50 uppercase tracking-[0.2em]">
+                          <span className="mr-3">Material: {p.material}</span>
+                          <span className="mr-3">Rating: {(p.rating || 0).toFixed(1)}</span>
+                          <span>Reviews: {p.numReviews || 0}</span>
                         </div>
-                      ))}
-                      <div className="md:col-span-7">
-                        <button onClick={() => addVariation(p._id)} className="text-[9px] font-bold uppercase tracking-[0.3em] text-white hover:text-blue-500 transition-colors flex items-center space-x-2">
-                          <Plus className="w-3 h-3" />
-                          <span>Add Variation</span>
+                        <div className="mt-1 text-[8px] text-white/50 uppercase tracking-[0.2em]">
+                          <span className="mr-3">Colors: {(p.colors || []).join(', ')}</span>
+                          <span className="mr-3">Waist: {(p.waistSizes || []).join(', ')}</span>
+                          <span>Length: {(p.lengthSizes || []).join(', ')}</span>
+                        </div>
+                      </div>
+                      <div className="text-[8px] text-white/60 uppercase tracking-[0.2em]">{p.category}</div>
+                      <div className="text-[10px] font-black text-white italic tracking-tighter">${p.price.toFixed(2)}</div>
+                      <div className="text-[8px] font-bold uppercase tracking-[0.3em]">
+                        {(() => {
+                          const total = (p.variations && p.variations.length > 0) ? p.variations.reduce((s: number, v: IVariation) => s + (v.countInStock || 0), 0) : (p.countInStock || 0);
+                          return <span className={total < 10 ? 'text-red-500' : 'text-white/60'}>{total} UNITS</span>;
+                        })()}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button onClick={() => router.push(`/admin/products/edit/${pId}`)} className="px-3 py-2 bg-white/10 border border-white/20 text-white hover:bg-white/20 transition" title="Edit">
+                          <Edit2 className="w-3 h-3" />
+                        </button>
+                        <button onClick={() => deleteProduct(pId)} className="px-3 py-2 bg-white/10 border border-white/20 text-white hover:bg-white/20 transition" title="Remove">
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                        <button onClick={() => saveProduct(pId)} className="px-3 py-2 bg-white text-black hover:bg-blue-500 hover:text-white transition font-black text-[9px] uppercase tracking-[0.3em]" title="Save">
+                          <Save className="w-3 h-3" />
+                        </button>
+                        <button onClick={() => setExpanded(expanded === pId ? null : pId)} className="px-3 py-2 bg-white/10 border border-white/20 text-white hover:bg-white/20 transition" title="Toggle Details">
+                          <ChevronDown className={`w-3 h-3 transition-transform ${expanded === pId ? 'rotate-180' : ''}`} />
                         </button>
                       </div>
                     </div>
                     
-                    <div className="mt-4 flex flex-wrap gap-2 items-center">
-                      <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-white/40">Archive Sections:</span>
-                      {['older','high_demand','running_out','rare_drop'].map(tag => (
-                        <button
-                          key={tag}
-                          onClick={() => toggleTag(p._id, tag)}
-                          className={`px-4 py-1 text-[9px] font-bold uppercase border transition-all ${
-                            (p.archiveTags || []).includes(tag) ? 'border-blue-500 bg-blue-500 text-white' : 'border-white/20 text-gray-400 hover:border-white/50'
-                          }`}
-                        >
-                          {tag.replace('_',' ')}
-                        </button>
-                      ))}
+                    <div className={`mt-4 overflow-hidden transition-all ${expanded === pId ? 'max-h-[1000px]' : 'max-h-0'}`}>
+                      <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_80px] gap-4 items-end p-4 bg-white/5 border border-white/10">
+                        <div className="text-[8px] font-bold uppercase tracking-[0.3em] text-white/40 md:col-span-7">Variations</div>
+                        {(p.variations || []).map((v: IVariation, idx: number) => (
+                          <div key={idx} className="contents">
+                            <div>
+                              <label className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">SKU</label>
+                              <input value={v.sku} onChange={(e) => updateVariationField(pId, idx, 'sku', e.target.value)} className="w-full bg-transparent text-white text-[10px] border-b border-white/10 focus:outline-none" />
+                            </div>
+                            <div>
+                              <label className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">Color</label>
+                              <input value={v.color} onChange={(e) => updateVariationField(pId, idx, 'color', e.target.value)} className="w-full bg-transparent text-white text-[10px] border-b border-white/10 focus:outline-none" />
+                            </div>
+                            <div>
+                              <label className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">Waist</label>
+                              <input type="number" value={v.waistSize} onChange={(e) => updateVariationField(pId, idx, 'waistSize', parseInt(e.target.value))} className="w-full bg-transparent text-white text-[10px] border-b border-white/10 focus:outline-none" />
+                            </div>
+                            <div>
+                              <label className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">Length</label>
+                              <input type="number" value={v.lengthSize} onChange={(e) => updateVariationField(pId, idx, 'lengthSize', parseInt(e.target.value))} className="w-full bg-transparent text-white text-[10px] border-b border-white/10 focus:outline-none" />
+                            </div>
+                            <div>
+                              <label className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">Price</label>
+                              <input type="number" value={v.price} onChange={(e) => updateVariationField(pId, idx, 'price', parseFloat(e.target.value))} className="w-full bg-transparent text-white text-[10px] border-b border-white/10 focus:outline-none" />
+                            </div>
+                            <div>
+                              <label className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">Stock</label>
+                              <input type="number" value={v.countInStock} onChange={(e) => updateVariationField(pId, idx, 'countInStock', parseInt(e.target.value))} className="w-full bg-transparent text-white text-[10px] border-b border-white/10 focus:outline-none" />
+                            </div>
+                            <div className="flex items-end">
+                              <button onClick={() => removeVariation(pId, idx)} className="px-3 py-2 bg-white/10 border border-white/20 text-white hover:bg-white/20 transition" title="Remove Variation">
+                                <Trash2 className="w-3 h-3" />
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                        <div className="md:col-span-7">
+                          <button onClick={() => addVariation(pId)} className="text-[9px] font-bold uppercase tracking-[0.3em] text-white hover:text-blue-500 transition-colors flex items-center space-x-2">
+                            <Plus className="w-3 h-3" />
+                            <span>Add Variation</span>
+                          </button>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-4 flex flex-wrap gap-2 items-center">
+                        <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-white/40">Archive Sections:</span>
+                        {['older','high_demand','running_out','rare_drop'].map(tag => (
+                          <button
+                            key={tag}
+                            onClick={() => toggleTag(pId, tag)}
+                            className={`px-4 py-1 text-[9px] font-bold uppercase border transition-all ${
+                              (p.archiveTags || []).includes(tag) ? 'border-blue-500 bg-blue-500 text-white' : 'border-white/20 text-gray-400 hover:border-white/50'
+                            }`}
+                          >
+                            {tag.replace('_',' ')}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
