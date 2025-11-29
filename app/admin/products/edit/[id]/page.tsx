@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { ChevronLeft, Save, X, Plus, Trash2 } from 'lucide-react';
-import { IProduct, IVariation } from '@/models/Product';
+import { IProductData, IVariation } from '@/models/Product';
 
 const EditProductPage = () => {
   const { id } = useParams();
-  const [formData, setFormData] = useState<IProduct | null>(null);
+  const [formData, setFormData] = useState<IProductData | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const router = useRouter();
@@ -47,7 +47,7 @@ const EditProductPage = () => {
       const waistSizes = vars.length ? Array.from(new Set(vars.map((v: IVariation) => v.waistSize).filter((n: number) => !isNaN(n)))).sort((a: number, b: number) => a - b) : (formData.waistSizes || []);
       const lengthSizes = vars.length ? Array.from(new Set(vars.map((v: IVariation) => v.lengthSize).filter((n: number) => !isNaN(n)))).sort((a: number, b: number) => a - b) : (formData.lengthSizes || []);
       const totalStock = vars.length ? vars.reduce((sum: number, v: IVariation) => sum + (v.countInStock || 0), 0) : (formData.countInStock || 0);
-      const payload: IProduct = { ...formData, colors, waistSizes, lengthSizes, countInStock: totalStock } as IProduct;
+      const payload: IProductData = { ...formData, colors, waistSizes, lengthSizes, countInStock: totalStock };
       const res = await fetch(`/api/products/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -65,6 +65,7 @@ const EditProductPage = () => {
   };
 
   const addVariation = () => {
+    if (!formData) return;
     setFormData({
       ...formData,
       variations: [
@@ -83,6 +84,7 @@ const EditProductPage = () => {
   };
 
   const removeVariation = (index: number) => {
+    if (!formData) return;
     const newVariations = [...formData.variations];
     newVariations.splice(index, 1);
     setFormData({ ...formData, variations: newVariations });
@@ -91,6 +93,12 @@ const EditProductPage = () => {
   if (loading) return (
     <div className="bg-[#020202] min-h-screen flex items-center justify-center">
       <p className="text-[10px] uppercase tracking-[1em] text-white/20 italic">RETRIEVING ARCHIVE DATA...</p>
+    </div>
+  );
+
+  if (!formData) return (
+    <div className="bg-[#020202] min-h-screen flex items-center justify-center">
+      <p className="text-[10px] uppercase tracking-[1em] text-white/20 italic">PIECE NOT FOUND</p>
     </div>
   );
 
@@ -230,7 +238,7 @@ const EditProductPage = () => {
                 <label className="text-[9px] font-bold uppercase tracking-[0.4em] text-white/40">FIT</label>
                 <select
                   value={formData.fit}
-                  onChange={(e) => setFormData({ ...formData, fit: e.target.value })}
+                  onChange={(e) => setFormData({ ...formData, fit: e.target.value as IProductData['fit'] })}
                   className="w-full bg-transparent text-white text-[10px] font-bold uppercase tracking-[0.2em] focus:outline-none appearance-none"
                 >
                   <option value="Slim" className="bg-black">Slim</option>
@@ -245,7 +253,7 @@ const EditProductPage = () => {
                 <label className="text-[9px] font-bold uppercase tracking-[0.4em] text-white/40">WASH</label>
                 <select
                   value={formData.wash}
-                  onChange={(e) => setFormData({ ...formData, wash: e.target.value })}
+                  onChange={(e) => setFormData({ ...formData, wash: e.target.value as IProductData['wash'] })}
                   className="w-full bg-transparent text-white text-[10px] font-bold uppercase tracking-[0.2em] focus:outline-none appearance-none"
                 >
                   <option value="Dark" className="bg-black">Dark</option>
@@ -260,7 +268,7 @@ const EditProductPage = () => {
                 <label className="text-[9px] font-bold uppercase tracking-[0.4em] text-white/40">GENDER</label>
                 <select
                   value={formData.gender}
-                  onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                  onChange={(e) => setFormData({ ...formData, gender: e.target.value as IProductData['gender'] })}
                   className="w-full bg-transparent text-white text-[10px] font-bold uppercase tracking-[0.2em] focus:outline-none appearance-none"
                 >
                   <option value="Men" className="bg-black">Men</option>
