@@ -11,7 +11,8 @@ export interface IVariation {
   image: string;
 }
 
-export interface IProduct extends Document {
+export interface IProductData {
+  _id?: string;
   name: string;
   description: string;
   price: number;
@@ -36,7 +37,11 @@ export interface IProduct extends Document {
   colors: string[];
   waistSizes: number[];
   lengthSizes: number[];
+  createdAt?: string;
+  updatedAt?: string;
 }
+
+export interface IProduct extends Document, Omit<IProductData, '_id'> {}
 
 const VariationSchema = new Schema({
   sku: { type: String, required: true },
