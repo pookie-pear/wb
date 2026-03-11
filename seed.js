@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const MONGODB_URI = 'mongodb://localhost:27017/ecom';
+require('dotenv').config({ path: '.env.local' });
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ecom';
 
 const products = [
   {

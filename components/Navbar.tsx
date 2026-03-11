@@ -15,7 +15,12 @@ const Navbar = () => {
   useEffect(() => {
     const userStr = localStorage.getItem('user');
     if (userStr) {
-      setUser(JSON.parse(userStr));
+      try {
+        setUser(JSON.parse(userStr));
+      } catch (err) {
+        console.error('User load error', err);
+        setUser(null);
+      }
     }
   }, []);
 

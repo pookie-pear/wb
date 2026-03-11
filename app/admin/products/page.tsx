@@ -20,10 +20,18 @@ const AdminProductsPage = () => {
       try {
         const res = await fetch('/api/products');
         const data = await res.json();
-        setProducts(data);
-        setFilteredProducts(data);
+        if (Array.isArray(data)) {
+          setProducts(data);
+          setFilteredProducts(data);
+        } else {
+          console.error('Data fetched is not an array:', data);
+          setProducts([]);
+          setFilteredProducts([]);
+        }
       } catch (err) {
         console.error('Failed to fetch', err);
+        setProducts([]);
+        setFilteredProducts([]);
       } finally {
         setLoading(false);
       }
@@ -31,7 +39,14 @@ const AdminProductsPage = () => {
     
     // Check for admin access
     const userStr = localStorage.getItem('user');
-    if (!userStr || !JSON.parse(userStr).isAdmin) {
+    try {
+      const user = userStr ? JSON.parse(userStr) : null;
+      if (!user || !user.isAdmin) {
+        router.push('/login');
+        return;
+      }
+    } catch (err) {
+      console.error('Auth check error', err);
       router.push('/login');
       return;
     }
@@ -40,6 +55,10 @@ const AdminProductsPage = () => {
   }, [router]);
 
   useEffect(() => {
+    if (!Array.isArray(products)) {
+      setFilteredProducts([]);
+      return;
+    }
     const filtered = products.filter(p => 
       p.name.toLowerCase().includes(search.toLowerCase()) ||
       p.fit.toLowerCase().includes(search.toLowerCase()) ||

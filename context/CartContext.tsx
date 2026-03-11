@@ -26,7 +26,17 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
-      setCart(JSON.parse(savedCart));
+      try {
+        const data = JSON.parse(savedCart);
+        if (Array.isArray(data)) {
+          setCart(data);
+        } else {
+          setCart([]);
+        }
+      } catch (err) {
+        console.error('Cart load error', err);
+        setCart([]);
+      }
     }
   }, []);
 
