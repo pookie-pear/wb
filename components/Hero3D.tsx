@@ -42,7 +42,7 @@ const CategoryCircle = ({ label, href }: { label: string, href: string }) => (
 const Scene = () => {
   const controlsRef = useRef<any>(null);
   const [autoRotate, setAutoRotate] = useState(false);
-  const timerRef = useRef<any>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const resetTimer = () => {
     setAutoRotate(false);
@@ -53,7 +53,12 @@ const Scene = () => {
   };
 
   useEffect(() => {
-    resetTimer();
+    // Initial timer setup after mount
+    const timeoutId = setTimeout(() => {
+      setAutoRotate(true);
+    }, 5000);
+    timerRef.current = timeoutId;
+
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
@@ -84,11 +89,12 @@ const Scene = () => {
           blur={2.5} 
           far={10} 
           color="#000000"
+          resolution={512}
         />
       </Suspense>
 
       <ambientLight intensity={0.5} />
-      <spotLight position={[10, 20, 10]} angle={0.15} penumbra={1} intensity={2} color="#fff" castShadow />
+      <spotLight position={[10, 20, 10]} angle={0.15} penumbra={1} intensity={2} color="#fff" castShadow shadow-map={undefined} />
       <pointLight position={[-10, 10, -10]} intensity={1} color="#fff" />
       <directionalLight position={[0, 5, 5]} intensity={1.5} color="#fff" />
     </>

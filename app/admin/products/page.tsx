@@ -17,19 +17,31 @@ const AdminProductsPage = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true);
       try {
+        console.log('Fetching products from /api/products...');
         const res = await fetch('/api/products');
+        
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          console.error('API Error Response:', errorData);
+          throw new Error(`API returned ${res.status}: ${JSON.stringify(errorData)}`);
+        }
+
         const data = await res.json();
+        console.log('Received data type:', typeof data);
+        console.log('Is array?', Array.isArray(data));
+        
         if (Array.isArray(data)) {
           setProducts(data);
           setFilteredProducts(data);
         } else {
-          console.error('Data fetched is not an array:', data);
+          console.error('Data fetched is not an array. Actual data:', data);
           setProducts([]);
           setFilteredProducts([]);
         }
       } catch (err) {
-        console.error('Failed to fetch', err);
+        console.error('Critical Fetch Error:', err);
         setProducts([]);
         setFilteredProducts([]);
       } finally {
@@ -244,7 +256,7 @@ const AdminProductsPage = () => {
           <div className="text-center py-48 opacity-20">
             <p className="text-[10px] uppercase tracking-[1em] font-light italic">SYNCHRONIZING ARCHIVE...</p>
           </div>
-        ) : filteredProducts.length === 0 ? (
+        ) : (!Array.isArray(filteredProducts) || filteredProducts.length === 0) ? (
           <div className="text-center py-48 opacity-20 border border-dashed border-white/10">
             <Package className="w-12 h-12 mx-auto mb-6 opacity-40" />
             <p className="text-[10px] uppercase tracking-[1em] font-light italic">THE ARCHIVE IS CURRENTLY EMPTY</p>
@@ -261,13 +273,13 @@ const AdminProductsPage = () => {
             </div>
             <div className="divide-y divide-white/10">
               {filteredProducts.map((p) => {
-                if (!p._id) return null;
+                if (!p || !p._id) return null;
                 const pId = p._id;
                 return (
                   <div key={pId} className="px-4 py-4">
                     <div className="grid grid-cols-[80px_1.8fr_1fr_0.9fr_1fr_220px] items-center gap-4">
                       <div className="relative h-16 w-12 bg-white/5 border border-white/10">
-                        <Image src={p.image} alt={p.name} fill className="object-cover" />
+                        <Image src={p.image || ''} alt={p.name || ''} fill className="object-cover" />
                       </div>
                       <div>
                         <div className="text-[10px] font-bold uppercase tracking-[0.3em] text-white">{p.name}</div>
@@ -284,10 +296,11 @@ const AdminProductsPage = () => {
                         </div>
                       </div>
                       <div className="text-[8px] text-white/60 uppercase tracking-[0.2em]">{p.category}</div>
-                      <div className="text-[10px] font-black text-white italic tracking-tighter">${p.price.toFixed(2)}</div>
+                      <div className="text-[10px] font-black text-white italic tracking-tighter">${(p.price || 0).toFixed(2)}</div>
                       <div className="text-[8px] font-bold uppercase tracking-[0.3em]">
                         {(() => {
-                          const total = (p.variations && p.variations.length > 0) ? p.variations.reduce((s: number, v: IVariation) => s + (v.countInStock || 0), 0) : (p.countInStock || 0);
+                          const vars = Array.isArray(p.variations) ? p.variations : [];
+                          const total = vars.length > 0 ? vars.reduce((s: number, v: IVariation) => s + (v.countInStock || 0), 0) : (p.countInStock || 0);
                           return <span className={total < 10 ? 'text-red-500' : 'text-white/60'}>{total} UNITS</span>;
                         })()}
                       </div>
@@ -310,7 +323,7 @@ const AdminProductsPage = () => {
                     <div className={`mt-4 overflow-hidden transition-all ${expanded === pId ? 'max-h-[1000px]' : 'max-h-0'}`}>
                       <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_80px] gap-4 items-end p-4 bg-white/5 border border-white/10">
                         <div className="text-[8px] font-bold uppercase tracking-[0.3em] text-white/40 md:col-span-7">Variations</div>
-                        {(p.variations || []).map((v: IVariation, idx: number) => (
+                        {(Array.isArray(p.variations) ? p.variations : []).map((v: IVariation, idx: number) => (
                           <div key={idx} className="contents">
                             <div>
                               <label className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/40">SKU</label>
