@@ -8,12 +8,10 @@ const products = [
     description: '14.5oz Japanese selvedge denim, deep indigo wash with natural aging potential. Hand-crafted in small batches.',
     price: 245,
     category: 'Jeans',
-    image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?auto=compress&cs=tinysrgb&w=800',
     images: [
-      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1475178626620-a4d074967452?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1555689502-c4b22d76c56f?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1516914915600-2441bd98513c?auto=format&fit=crop&q=80&w=800'
+      'https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?auto=compress&cs=tinysrgb&w=800',
+      'https://images.pexels.com/photos/2363825/pexels-photo-2363825.jpeg?auto=compress&cs=tinysrgb&w=800'
     ],
     fit: 'Slim',
     wash: 'Dark',
@@ -26,8 +24,8 @@ const products = [
     numReviews: 12,
     colors: ['Indigo'],
     variations: [
-      { sku: 'DH-RS-30-32', color: 'Indigo', waistSize: 30, lengthSize: 32, countInStock: 5, price: 245, image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=800' },
-      { sku: 'DH-RS-32-32', color: 'Indigo', waistSize: 32, lengthSize: 32, countInStock: 8, price: 245, image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=800' }
+      { sku: 'DH-RS-30-32', color: 'Indigo', waistSize: 30, lengthSize: 32, countInStock: 5, price: 245, image: 'https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?auto=compress&cs=tinysrgb&w=800' },
+      { sku: 'DH-RS-32-32', color: 'Indigo', waistSize: 32, lengthSize: 32, countInStock: 8, price: 245, image: 'https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?auto=compress&cs=tinysrgb&w=800' }
     ]
   },
   {
@@ -35,12 +33,10 @@ const products = [
     description: 'Heavily washed for a lived-in feel. Inspired by the 90s archive pieces. Relaxed fit with a slight taper.',
     price: 185,
     category: 'Jeans',
-    image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.pexels.com/photos/1082528/pexels-photo-1082528.jpeg?auto=compress&cs=tinysrgb&w=800',
     images: [
-      'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1516914915600-2441bd98513c?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1475178626620-a4d074967452?auto=format&fit=crop&q=80&w=800'
+      'https://images.pexels.com/photos/1082528/pexels-photo-1082528.jpeg?auto=compress&cs=tinysrgb&w=800',
+      'https://images.pexels.com/photos/1082529/pexels-photo-1082529.jpeg?auto=compress&cs=tinysrgb&w=800'
     ],
     fit: 'Relaxed',
     wash: 'Medium',
@@ -53,7 +49,7 @@ const products = [
     numReviews: 8,
     colors: ['Vintage Blue'],
     variations: [
-      { sku: 'VW-01-32-30', color: 'Vintage Blue', waistSize: 32, lengthSize: 30, countInStock: 4, price: 185, image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=800' }
+      { sku: 'VW-01-32-30', color: 'Vintage Blue', waistSize: 32, lengthSize: 30, countInStock: 4, price: 185, image: 'https://images.pexels.com/photos/1082528/pexels-photo-1082528.jpeg?auto=compress&cs=tinysrgb&w=800' }
     ]
   },
   {
@@ -61,12 +57,9 @@ const products = [
     description: 'Deep black reactive dye that resists fading. Clean, sharp lines for a formal denim appearance.',
     price: 165,
     category: 'Jeans',
-    image: 'https://images.unsplash.com/photo-1582552938357-32b906df40cb?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.pexels.com/photos/52518/jeans-pants-blue-shop-52518.jpeg?auto=compress&cs=tinysrgb&w=800',
     images: [
-      'https://images.unsplash.com/photo-1582552938357-32b906df40cb?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1617114919297-3c8ddb01f599?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1525450824231-0829bb07b744?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=800'
+      'https://images.pexels.com/photos/52518/jeans-pants-blue-shop-52518.jpeg?auto=compress&cs=tinysrgb&w=800'
     ],
     fit: 'Skinny',
     wash: 'Black',
@@ -79,7 +72,7 @@ const products = [
     numReviews: 24,
     colors: ['Black'],
     variations: [
-      { sku: 'MB-30-32', color: 'Black', waistSize: 30, lengthSize: 32, countInStock: 10, price: 165, image: 'https://images.unsplash.com/photo-1582552938357-32b906df40cb?auto=format&fit=crop&q=80&w=800' }
+      { sku: 'MB-30-32', color: 'Black', waistSize: 30, lengthSize: 32, countInStock: 10, price: 165, image: 'https://images.pexels.com/photos/52518/jeans-pants-blue-shop-52518.jpeg?auto=compress&cs=tinysrgb&w=800' }
     ]
   }
 ];
