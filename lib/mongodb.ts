@@ -21,6 +21,11 @@ async function connectDB() {
     );
   }
 
+  // Check for common misconfigurations with port 10000 on Render
+  if (MONGODB_URI.includes(':10000')) {
+    console.warn('⚠️ PORT 10000 detected in MONGODB_URI. This is likely Render\'s web server port, not the database port. Atlas typically uses port 27017 or no port at all in mongodb+srv URLs.');
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
