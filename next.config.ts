@@ -47,6 +47,26 @@ const nextConfig: NextConfig = {
         protocol: 'http',
         hostname: '**.bowandsquare.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.imgur.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'imgur.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.postimg.cc',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.imgbb.com',
+      },
     ],
   },
 };
