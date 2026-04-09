@@ -15,6 +15,38 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cdn.pixabay.com',
       },
+      {
+        protocol: 'https',
+        hostname: '**.google.com',
+      },
+      {
+        protocol: 'http',
+        hostname: '**.google.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.googleusercontent.com',
+      },
+      {
+        protocol: 'http',
+        hostname: '**.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.shopify.com',
+      },
+      {
+        protocol: 'http',
+        hostname: '**.shopify.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.bowandsquare.com',
+      },
+      {
+        protocol: 'http',
+        hostname: '**.bowandsquare.com',
+      },
     ],
   },
 };
