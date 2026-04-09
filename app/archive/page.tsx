@@ -44,7 +44,7 @@ export default async function ArchivePage() {
             {olderDesigns.slice(0, 8).map(p => (
               <Link key={p._id as unknown as string} href={`/product/${p._id}`} className="group block">
                 <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
-                  <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <Image src={p.image} alt={p.name} fill unoptimized={p.image.startsWith('http')} className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute bottom-3 left-3 text-[9px] font-bold uppercase tracking-[0.3em] text-white/60">
                     {p.fit} / {p.wash}
                   </div>
@@ -61,7 +61,7 @@ export default async function ArchivePage() {
             {highDemand.map(p => (
               <Link key={p._id as unknown as string} href={`/product/${p._id}`} className="group block">
                 <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
-                  <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <Image src={p.image} alt={p.name} fill unoptimized={p.image.startsWith('http')} className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute top-3 right-3 text-[8px] font-bold text-white uppercase tracking-[0.3em] bg-black/40 backdrop-blur-md px-2 py-1">
                     Trending
                   </div>
@@ -78,7 +78,7 @@ export default async function ArchivePage() {
             {runningOut.map(p => (
               <Link key={p._id as unknown as string} href={`/product/${p._id}`} className="group block">
                 <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
-                  <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <Image src={p.image} alt={p.name} fill unoptimized={p.image.startsWith('http')} className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute top-3 right-3 text-[8px] font-bold text-white uppercase tracking-[0.3em] bg-black/40 backdrop-blur-md px-2 py-1">
                     Last Pieces
                   </div>

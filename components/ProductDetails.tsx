@@ -50,6 +50,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             src={currentImage}
             alt={product.name}
             fill
+            unoptimized={currentImage.startsWith('http')}
             className="object-cover"
             priority
           />
@@ -70,6 +71,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                   src={img}
                   alt={`${product.name} view ${idx + 1}`}
                   fill
+                  unoptimized={img.startsWith('http')}
                   className="object-cover"
                 />
               </button>

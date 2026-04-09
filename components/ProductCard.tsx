@@ -35,6 +35,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             src={images[currentImageIndex]}
             alt={product.name}
             fill
+            unoptimized={images[currentImageIndex].startsWith('http')}
             className="object-cover transition-all duration-700 ease-out group-hover:scale-105"
             priority={currentImageIndex === 0}
           />
