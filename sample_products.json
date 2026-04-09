@@ -1,0 +1,71 @@
+[
+  {
+    "name": "DENIM HAZE - RAW SELVEDGE",
+    "description": "14.5oz Japanese selvedge denim, deep indigo wash with natural aging potential. Hand-crafted in small batches.",
+    "price": 245,
+    "category": "Jeans",
+    "image": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1475178626620-a4d074967452?auto=format&fit=crop&q=80&w=800"
+    ],
+    "fit": "Slim",
+    "wash": "Dark",
+    "gender": "Unisex",
+    "material": "100% COTTON SELVEDGE",
+    "waistSizes": [28, 30, 32, 34, 36],
+    "lengthSizes": [30, 32, 34],
+    "countInStock": 25,
+    "rating": 4.9,
+    "numReviews": 12,
+    "colors": ["Indigo"],
+    "archiveTags": ["high_demand"],
+    "variations": [
+      { "sku": "DH-RS-30-32", "color": "Indigo", "waistSize": 30, "lengthSize": 32, "countInStock": 5, "price": 245, "image": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=800" }
+    ]
+  },
+  {
+    "name": "VINTAGE WASH 01",
+    "description": "Heavily washed for a lived-in feel. Inspired by the 90s archive pieces. Relaxed fit with a slight taper.",
+    "price": 185,
+    "category": "Jeans",
+    "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=800"
+    ],
+    "fit": "Relaxed",
+    "wash": "Medium",
+    "gender": "Unisex",
+    "material": "12oz ORGANIC COTTON",
+    "waistSizes": [30, 32, 34, 36],
+    "lengthSizes": [30, 32],
+    "countInStock": 15,
+    "rating": 4.7,
+    "numReviews": 8,
+    "colors": ["Vintage Blue"],
+    "archiveTags": ["older"],
+    "variations": []
+  },
+  {
+    "name": "MIDNIGHT BLACK",
+    "description": "Deep black reactive dye that resists fading. Clean, sharp lines for a formal denim appearance.",
+    "price": 165,
+    "category": "Jeans",
+    "image": "https://images.unsplash.com/photo-1582552938357-32b906df40cb?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1582552938357-32b906df40cb?auto=format&fit=crop&q=80&w=800"
+    ],
+    "fit": "Skinny",
+    "wash": "Black",
+    "gender": "Unisex",
+    "material": "STRETCH DENIM",
+    "waistSizes": [28, 30, 32, 34],
+    "lengthSizes": [30, 32, 34],
+    "countInStock": 40,
+    "rating": 4.8,
+    "numReviews": 24,
+    "colors": ["Black"],
+    "archiveTags": ["rare_drop"],
+    "variations": []
+  }
+]

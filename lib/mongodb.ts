@@ -15,8 +15,9 @@ async function connectDB() {
   const MONGODB_URI = process.env.MONGODB_URI;
 
   if (!MONGODB_URI) {
+    console.error('MONGODB_URI is missing from environment variables');
     throw new Error(
-      'Please define the MONGODB_URI environment variable inside .env.local'
+      'Please define the MONGODB_URI environment variable'
     );
   }
 
@@ -27,10 +28,18 @@ async function connectDB() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      connectTimeoutMS: 10000, // 10 seconds timeout
+      socketTimeoutMS: 45000,  // 45 seconds timeout
     };
 
+    console.log('Connecting to MongoDB Atlas...');
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      console.log('✅ Connected to MongoDB Atlas');
       return mongoose;
+    }).catch((err) => {
+      console.error('❌ Failed to connect to MongoDB Atlas:', err.message);
+      cached.promise = null; // Reset promise to allow retrying
+      throw err;
     });
   }
   cached.conn = await cached.promise;

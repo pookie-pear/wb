@@ -12,12 +12,14 @@ const AdminProductsPage = () => {
   const [filteredProducts, setFilteredProducts] = useState<IProductData[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
+      setError(null);
       try {
         console.log('Fetching products from /api/products...');
         const res = await fetch('/api/products');
@@ -25,7 +27,8 @@ const AdminProductsPage = () => {
         if (!res.ok) {
           const errorData = await res.json().catch(() => ({}));
           console.error('API Error Response:', errorData);
-          throw new Error(`API returned ${res.status}: ${JSON.stringify(errorData)}`);
+          const errorMsg = errorData.details || errorData.error || `API returned ${res.status}`;
+          throw new Error(errorMsg);
         }
 
         const data = await res.json();
@@ -39,11 +42,13 @@ const AdminProductsPage = () => {
           console.error('Data fetched is not an array. Actual data:', data);
           setProducts([]);
           setFilteredProducts([]);
+          setError('Data received from API is not in the expected format.');
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error('Critical Fetch Error:', err);
         setProducts([]);
         setFilteredProducts([]);
+        setError(err.message || 'An unexpected error occurred while fetching products.');
       } finally {
         setLoading(false);
       }
@@ -252,11 +257,28 @@ const AdminProductsPage = () => {
           </div>
         </div>
 
+        {/* Error Message Display */}
+        {error && (
+          <div className="mb-8 p-6 bg-red-500/10 border border-red-500/20 rounded-sm">
+            <h3 className="text-red-500 text-[10px] font-black uppercase tracking-[0.4em] mb-2 flex items-center gap-2">
+              <span>Database Access Error</span>
+            </h3>
+            <p className="text-red-400/80 text-xs font-light uppercase tracking-widest leading-loose">
+              {error}
+            </p>
+            <div className="mt-4 pt-4 border-t border-red-500/10">
+              <p className="text-[9px] text-red-400/50 uppercase tracking-[0.3em]">
+                Possible causes: Missing MONGODB_URI on Render dashboard, Atlas IP whitelist restriction, or incorrect credentials.
+              </p>
+            </div>
+          </div>
+        )}
+
         {loading ? (
           <div className="text-center py-48 opacity-20">
             <p className="text-[10px] uppercase tracking-[1em] font-light italic">SYNCHRONIZING ARCHIVE...</p>
           </div>
-        ) : (!Array.isArray(filteredProducts) || filteredProducts.length === 0) ? (
+        ) : (!Array.isArray(filteredProducts) || filteredProducts.length === 0) && !error ? (
           <div className="text-center py-48 opacity-20 border border-dashed border-white/10">
             <Package className="w-12 h-12 mx-auto mb-6 opacity-40" />
             <p className="text-[10px] uppercase tracking-[1em] font-light italic">THE ARCHIVE IS CURRENTLY EMPTY</p>

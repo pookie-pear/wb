@@ -5,6 +5,8 @@ import Hero3D from '@/components/Hero3D';
 import Filters from '@/components/Filters';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 async function getProducts(searchParams: any): Promise<IProduct[]> {
   try {
     await connectDB();

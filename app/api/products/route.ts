@@ -7,9 +7,16 @@ export async function GET() {
     await connectDB();
     const products = await Product.find({}).sort({ createdAt: -1 });
     return NextResponse.json(products);
-  } catch (error) {
-    console.error('Fetch error:', error);
-    return NextResponse.json({ error: 'Failed to fetch' }, { status: 500 });
+  } catch (error: any) {
+    console.error('Fetch error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
+    return NextResponse.json({ 
+      error: 'Failed to fetch products', 
+      details: error.message 
+    }, { status: 500 });
   }
 }
 
@@ -19,8 +26,15 @@ export async function POST(req: Request) {
     const body = await req.json();
     const product = await Product.create(body);
     return NextResponse.json(product, { status: 201 });
-  } catch (error) {
-    console.error('Create error:', error);
-    return NextResponse.json({ error: 'Failed to create' }, { status: 500 });
+  } catch (error: any) {
+    console.error('Create error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
+    return NextResponse.json({ 
+      error: 'Failed to create product', 
+      details: error.message 
+    }, { status: 500 });
   }
 }

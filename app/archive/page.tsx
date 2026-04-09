@@ -4,12 +4,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import RevealCard from '@/components/RevealCard';
 
+export const dynamic = 'force-dynamic';
+
 async function getAll(): Promise<IProduct[]> {
   try {
     await connectDB();
     const products = await Product.find({}).sort({ createdAt: -1 }).lean();
     return JSON.parse(JSON.stringify(products));
-  } catch {
+  } catch (error: any) {
+    console.error('Archive Page Fetch Error:', error.message);
     return [];
   }
 }
