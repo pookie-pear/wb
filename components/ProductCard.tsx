@@ -14,16 +14,22 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart } = useCart();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = product.images && product.images.length > 0 ? product.images : [product.image];
+  const rawImages = product.images && product.images.length > 0 ? product.images : [product.image];
+  const images = rawImages.filter((img): img is string => typeof img === 'string' && img.length > 0);
+  const currentImage = images[currentImageIndex] || '';
 
   const nextImage = (e: React.MouseEvent) => {
     e.preventDefault();
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    if (images.length > 1) {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }
   };
 
   const prevImage = (e: React.MouseEvent) => {
     e.preventDefault();
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    if (images.length > 1) {
+      setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    }
   };
 
   return (
@@ -31,17 +37,22 @@ const ProductCard = ({ product }: ProductCardProps) => {
       {/* Image Container - Minimalist Square/Portrait with Slider */}
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
         <Link href={`/product/${product._id}`} className="block w-full h-full">
-          <Image
-            src={images[currentImageIndex]}
-            alt={product.name}
-            fill
-            unoptimized={images[currentImageIndex].startsWith('http')}
-            className="object-cover transition-all duration-700 ease-out group-hover:scale-105"
-            priority={currentImageIndex === 0}
-            onError={(e) => {
-              console.error('Image load error for:', images[currentImageIndex]);
-            }}
-          />
+          {currentImage ? (
+            <img
+              src={currentImage}
+              alt={product.name}
+              className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
+              loading="lazy"
+              onError={(e) => {
+                console.error('Image load error for:', currentImage);
+                (e.target as HTMLImageElement).src = '/favicon.ico'; // simple fallback
+              }}
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-[8px] uppercase tracking-widest text-white/20">
+              No Image
+            </div>
+          )}
         </Link>
         
         {/* Slider Controls - Only show if more than one image */}

@@ -301,13 +301,16 @@ const AdminProductsPage = () => {
                   <div key={pId} className="px-4 py-4">
                     <div className="grid grid-cols-[80px_1.8fr_1fr_0.9fr_1fr_220px] items-center gap-4">
                       <div className="relative h-16 w-12 bg-white/5 border border-white/10">
-                        <Image 
-                          src={p.image || ''} 
-                          alt={p.name || ''} 
-                          fill 
-                          unoptimized={p.image?.startsWith('http')}
-                          className="object-cover" 
-                        />
+                        {p.image ? (
+                          <img 
+                            src={p.image} 
+                            alt={p.name || ''} 
+                            className="w-full h-full object-cover" 
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-[6px] text-white/20">NO IMG</div>
+                        )}
                       </div>
                       <div>
                         <div className="text-[10px] font-bold uppercase tracking-[0.3em] text-white">{p.name}</div>

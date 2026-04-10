@@ -46,14 +46,17 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
       {/* Image Gallery */}
       <div className="flex flex-col space-y-4">
         <div className="relative aspect-[4/5] w-full bg-[#0a0a0a] border border-white/5 overflow-hidden">
-          <Image
-            src={currentImage}
-            alt={product.name}
-            fill
-            unoptimized={currentImage.startsWith('http')}
-            className="object-cover"
-            priority
-          />
+          {currentImage ? (
+            <img
+              src={currentImage}
+              alt={product.name}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-[10px] uppercase tracking-widest text-white/20">
+              No Image Available
+            </div>
+          )}
         </div>
         
         {/* Thumbnails */}
@@ -67,13 +70,16 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                   selectedImage === idx ? 'border-white' : 'border-transparent opacity-50 hover:opacity-100'
                 }`}
               >
-                <Image
-                  src={img}
-                  alt={`${product.name} view ${idx + 1}`}
-                  fill
-                  unoptimized={img.startsWith('http')}
-                  className="object-cover"
-                />
+                {img ? (
+                  <img
+                    src={img}
+                    alt={`${product.name} view ${idx + 1}`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-white/5" />
+                )}
               </button>
             ))}
           </div>

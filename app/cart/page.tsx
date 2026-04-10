@@ -50,13 +50,16 @@ const CartPage = () => {
                 {cart.map((item) => (
                   <li key={item._id as unknown as string} className="py-10 flex items-center gap-8">
                     <div className="relative h-48 w-36 flex-shrink-0 bg-white/5 border border-white/10">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        unoptimized={item.image.startsWith('http')}
-                        className="object-cover"
-                      />
+                      {item.image ? (
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-white/5" />
+                      )}
                     </div>
                     
                     <div className="flex-1">
