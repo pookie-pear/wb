@@ -51,6 +51,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               src={currentImage}
               alt={product.name}
               className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-[10px] uppercase tracking-widest text-white/20">
@@ -76,6 +77,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                     alt={`${product.name} view ${idx + 1}`}
                     className="w-full h-full object-cover"
                     loading="lazy"
+                    referrerPolicy="no-referrer"
                   />
                 ) : (
                   <div className="w-full h-full bg-white/5" />

@@ -43,6 +43,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               alt={product.name}
               className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
               loading="lazy"
+              referrerPolicy="no-referrer"
               onError={(e) => {
                 console.error('Image load error for:', currentImage);
                 (e.target as HTMLImageElement).src = '/favicon.ico'; // simple fallback

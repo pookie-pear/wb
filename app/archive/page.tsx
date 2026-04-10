@@ -50,6 +50,7 @@ export default async function ArchivePage() {
                       alt={p.name} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                       loading="lazy"
+                      referrerPolicy="no-referrer"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[8px] uppercase tracking-widest text-white/20">
@@ -78,6 +79,7 @@ export default async function ArchivePage() {
                       alt={p.name} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                       loading="lazy"
+                      referrerPolicy="no-referrer"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[8px] uppercase tracking-widest text-white/20">
@@ -106,6 +108,7 @@ export default async function ArchivePage() {
                       alt={p.name} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                       loading="lazy"
+                      referrerPolicy="no-referrer"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[8px] uppercase tracking-widest text-white/20">

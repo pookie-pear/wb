@@ -15,6 +15,7 @@ export default function RevealCard({ product }: { product: IProduct }) {
             alt={product.name}
             className={`w-full h-full object-cover transition duration-500 ${revealed ? 'blur-0' : 'blur-md brightness-[0.7]'}`}
             loading="lazy"
+            referrerPolicy="no-referrer"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-[8px] uppercase tracking-widest text-white/20">

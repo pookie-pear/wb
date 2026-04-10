@@ -56,6 +56,7 @@ const CartPage = () => {
                           alt={item.name}
                           className="w-full h-full object-cover"
                           loading="lazy"
+                          referrerPolicy="no-referrer"
                         />
                       ) : (
                         <div className="w-full h-full bg-white/5" />
