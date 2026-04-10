@@ -45,12 +45,12 @@ export default async function ArchivePage() {
               <Link key={p._id as unknown as string} href={`/product/${p._id}`} className="group block">
                 <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
                   {p.image ? (
-                    <img 
+                    <Image 
                       src={p.image} 
                       alt={p.name} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                      loading="lazy"
-                      referrerPolicy="no-referrer"
+                      fill 
+                      unoptimized={p.image.startsWith('http')} 
+                      className="object-cover transition-transform duration-700 group-hover:scale-105" 
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[8px] uppercase tracking-widest text-white/20">
@@ -74,12 +74,12 @@ export default async function ArchivePage() {
               <Link key={p._id as unknown as string} href={`/product/${p._id}`} className="group block">
                 <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
                   {p.image ? (
-                    <img 
+                    <Image 
                       src={p.image} 
                       alt={p.name} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                      loading="lazy"
-                      referrerPolicy="no-referrer"
+                      fill 
+                      unoptimized={p.image.startsWith('http')} 
+                      className="object-cover transition-transform duration-700 group-hover:scale-105" 
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[8px] uppercase tracking-widest text-white/20">
@@ -103,12 +103,12 @@ export default async function ArchivePage() {
               <Link key={p._id as unknown as string} href={`/product/${p._id}`} className="group block">
                 <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
                   {p.image ? (
-                    <img 
+                    <Image 
                       src={p.image} 
                       alt={p.name} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                      loading="lazy"
-                      referrerPolicy="no-referrer"
+                      fill 
+                      unoptimized={p.image.startsWith('http')} 
+                      className="object-cover transition-transform duration-700 group-hover:scale-105" 
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[8px] uppercase tracking-widest text-white/20">

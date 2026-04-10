@@ -47,11 +47,13 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
       <div className="flex flex-col space-y-4">
         <div className="relative aspect-[4/5] w-full bg-[#0a0a0a] border border-white/5 overflow-hidden">
           {currentImage ? (
-            <img
+            <Image
               src={currentImage}
               alt={product.name}
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
+              fill
+              unoptimized={currentImage.startsWith('http')}
+              className="object-cover"
+              priority
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-[10px] uppercase tracking-widest text-white/20">
@@ -72,12 +74,12 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                 }`}
               >
                 {img ? (
-                  <img
+                  <Image
                     src={img}
                     alt={`${product.name} view ${idx + 1}`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    referrerPolicy="no-referrer"
+                    fill
+                    unoptimized={img.startsWith('http')}
+                    className="object-cover"
                   />
                 ) : (
                   <div className="w-full h-full bg-white/5" />

@@ -38,15 +38,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
         <Link href={`/product/${product._id}`} className="block w-full h-full">
           {currentImage ? (
-            <img
+            <Image
               src={currentImage}
               alt={product.name}
-              className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
-              loading="lazy"
-              referrerPolicy="no-referrer"
+              fill
+              unoptimized={currentImage.startsWith('http')}
+              className="object-cover transition-all duration-700 ease-out group-hover:scale-105"
+              priority={currentImageIndex === 0}
               onError={(e) => {
                 console.error('Image load error for:', currentImage);
-                (e.target as HTMLImageElement).src = '/favicon.ico'; // simple fallback
               }}
             />
           ) : (

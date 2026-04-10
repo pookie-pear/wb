@@ -13,25 +13,6 @@ const EditProductPage = () => {
   const [saving, setSaving] = useState(false);
   const router = useRouter();
 
-  const extractDirectLink = (url: string) => {
-    if (!url) return '';
-    let processed = url.trim();
-    
-    // Google Search Links
-    if (processed.includes('google.com/imgres')) {
-      const match = processed.match(/imgurl=([^&]+)/);
-      if (match) processed = decodeURIComponent(match[1]);
-    }
-    
-    // Imgur Landing Pages
-    if (processed.includes('imgur.com/') && !processed.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
-      const id = processed.split('/').pop();
-      if (id && id.length >= 5) processed = `https://i.imgur.com/${id}.jpg`;
-    }
-    
-    return processed;
-  };
-
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -179,31 +160,13 @@ const EditProductPage = () => {
 
             <div className="space-y-4 border-b border-white/10 pb-4">
               <label className="text-[9px] font-bold uppercase tracking-[0.4em] text-white/40">IMAGE URL</label>
-              <div className="flex gap-4 items-start">
-                <div className="flex-1">
-                  <input
-                    type="text"
-                    required
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    onBlur={(e) => setFormData({ ...formData, image: extractDirectLink(e.target.value) })}
-                    className="w-full bg-transparent text-white text-[11px] tracking-[0.2em] focus:outline-none placeholder:text-gray-800"
-                    placeholder="https://..."
-                  />
-                </div>
-                {formData.image && (
-                  <div className="w-16 h-16 bg-white/5 border border-white/10 overflow-hidden">
-                    <img 
-                      src={formData.image} 
-                      alt="Preview" 
-                      className="w-full h-full object-cover"
-                      referrerPolicy="no-referrer"
-                      onError={(e) => (e.target as HTMLImageElement).src = '/favicon.ico'}
-                    />
-                  </div>
-                )}
-              </div>
-              <p className="text-[7px] text-white/20 uppercase tracking-widest mt-2">Pasting a Google or Imgur link? We'll try to extract the direct link for you.</p>
+              <input
+                type="text"
+                required
+                value={formData.image}
+                onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                className="w-full bg-transparent text-white text-[11px] tracking-[0.2em] focus:outline-none placeholder:text-gray-800"
+              />
             </div>
 
             <div className="space-y-4 border-b border-white/10 pb-4">
@@ -243,35 +206,17 @@ const EditProductPage = () => {
               <div className="space-y-4">
                 {(formData.images || []).map((img: string, idx: number) => (
                   <div key={idx} className="flex items-center space-x-4">
-                    <div className="flex-1 flex flex-col gap-2">
-                      <input
-                        type="text"
-                        value={img}
-                        onChange={(e) => {
-                          const newImages = [...formData.images];
-                          newImages[idx] = e.target.value;
-                          setFormData({ ...formData, images: newImages });
-                        }}
-                        onBlur={(e) => {
-                          const newImages = [...formData.images];
-                          newImages[idx] = extractDirectLink(e.target.value);
-                          setFormData({ ...formData, images: newImages });
-                        }}
-                        className="w-full bg-transparent text-white text-[10px] tracking-[0.1em] focus:outline-none border-b border-white/5 pb-2"
-                        placeholder="https://..."
-                      />
-                      {img && (
-                        <div className="w-12 h-12 bg-white/5 border border-white/10 overflow-hidden">
-                          <img 
-                            src={img} 
-                            alt="Preview" 
-                            className="w-full h-full object-cover"
-                            referrerPolicy="no-referrer"
-                            onError={(e) => (e.target as HTMLImageElement).src = '/favicon.ico'}
-                          />
-                        </div>
-                      )}
-                    </div>
+                    <input
+                      type="text"
+                      value={img}
+                      onChange={(e) => {
+                        const newImages = [...formData.images];
+                        newImages[idx] = e.target.value;
+                        setFormData({ ...formData, images: newImages });
+                      }}
+                      className="flex-1 bg-transparent text-white text-[10px] tracking-[0.1em] focus:outline-none border-b border-white/5 pb-2"
+                      placeholder="https://..."
+                    />
                     <button 
                       type="button"
                       onClick={() => {

@@ -302,12 +302,12 @@ const AdminProductsPage = () => {
                     <div className="grid grid-cols-[80px_1.8fr_1fr_0.9fr_1fr_220px] items-center gap-4">
                       <div className="relative h-16 w-12 bg-white/5 border border-white/10">
                         {p.image ? (
-                          <img 
+                          <Image 
                             src={p.image} 
                             alt={p.name || ''} 
-                            className="w-full h-full object-cover" 
-                            loading="lazy"
-                            referrerPolicy="no-referrer"
+                            fill 
+                            unoptimized={p.image.startsWith('http')}
+                            className="object-cover" 
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-[6px] text-white/20">NO IMG</div>

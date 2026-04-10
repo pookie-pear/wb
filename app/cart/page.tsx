@@ -51,12 +51,12 @@ const CartPage = () => {
                   <li key={item._id as unknown as string} className="py-10 flex items-center gap-8">
                     <div className="relative h-48 w-36 flex-shrink-0 bg-white/5 border border-white/10">
                       {item.image ? (
-                        <img
+                        <Image
                           src={item.image}
                           alt={item.name}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                          referrerPolicy="no-referrer"
+                          fill
+                          unoptimized={item.image.startsWith('http')}
+                          className="object-cover"
                         />
                       ) : (
                         <div className="w-full h-full bg-white/5" />
