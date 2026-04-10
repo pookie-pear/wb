@@ -38,6 +38,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
             unoptimized={images[currentImageIndex].startsWith('http')}
             className="object-cover transition-all duration-700 ease-out group-hover:scale-105"
             priority={currentImageIndex === 0}
+            onError={(e) => {
+              console.error('Image load error for:', images[currentImageIndex]);
+            }}
           />
         </Link>
         
