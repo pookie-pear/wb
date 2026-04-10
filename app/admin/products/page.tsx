@@ -306,7 +306,7 @@ const AdminProductsPage = () => {
                             src={p.image} 
                             alt={p.name || ''} 
                             fill 
-                            unoptimized={p.image.startsWith('http')}
+                            unoptimized
                             className="object-cover" 
                           />
                         ) : (

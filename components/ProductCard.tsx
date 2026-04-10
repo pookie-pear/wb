@@ -42,7 +42,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               src={currentImage}
               alt={product.name}
               fill
-              unoptimized={currentImage.startsWith('http')}
+              unoptimized
               className="object-cover transition-all duration-700 ease-out group-hover:scale-105"
               priority={currentImageIndex === 0}
               onError={(e) => {

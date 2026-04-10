@@ -14,7 +14,7 @@ export default function RevealCard({ product }: { product: IProduct }) {
             src={product.image}
             alt={product.name}
             fill
-            unoptimized={product.image.startsWith('http')}
+            unoptimized
             className={`object-cover transition duration-500 ${revealed ? 'blur-0' : 'blur-md brightness-[0.7]'}`}
           />
         ) : (

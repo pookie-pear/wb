@@ -49,7 +49,7 @@ export default async function ArchivePage() {
                       src={p.image} 
                       alt={p.name} 
                       fill 
-                      unoptimized={p.image.startsWith('http')} 
+                      unoptimized
                       className="object-cover transition-transform duration-700 group-hover:scale-105" 
                     />
                   ) : (
@@ -78,7 +78,7 @@ export default async function ArchivePage() {
                       src={p.image} 
                       alt={p.name} 
                       fill 
-                      unoptimized={p.image.startsWith('http')} 
+                      unoptimized
                       className="object-cover transition-transform duration-700 group-hover:scale-105" 
                     />
                   ) : (
@@ -107,7 +107,7 @@ export default async function ArchivePage() {
                       src={p.image} 
                       alt={p.name} 
                       fill 
-                      unoptimized={p.image.startsWith('http')} 
+                      unoptimized
                       className="object-cover transition-transform duration-700 group-hover:scale-105" 
                     />
                   ) : (

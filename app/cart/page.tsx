@@ -55,7 +55,7 @@ const CartPage = () => {
                           src={item.image}
                           alt={item.name}
                           fill
-                          unoptimized={item.image.startsWith('http')}
+                          unoptimized
                           className="object-cover"
                         />
                       ) : (
