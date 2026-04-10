@@ -18,6 +18,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const images = rawImages.filter((img): img is string => typeof img === 'string' && img.length > 0);
   const currentImage = images[currentImageIndex] || '';
 
+  // Clean the URL to ensure there are no trailing backticks or spaces
+  const cleanImage = currentImage.trim().replace(/^`+|`+$/g, '');
+
   const nextImage = (e: React.MouseEvent) => {
     e.preventDefault();
     if (images.length > 1) {
@@ -37,16 +40,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
       {/* Image Container - Minimalist Square/Portrait with Slider */}
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
         <Link href={`/product/${product._id}`} className="block w-full h-full">
-          {currentImage ? (
+          {cleanImage ? (
             <Image
-              src={currentImage}
+              src={cleanImage}
               alt={product.name}
               fill
               unoptimized
               className="object-cover transition-all duration-700 ease-out group-hover:scale-105"
               priority={currentImageIndex === 0}
               onError={(e) => {
-                console.error('Image load error for:', currentImage);
+                console.error('Image load error for:', cleanImage);
               }}
             />
           ) : (
