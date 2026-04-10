@@ -14,7 +14,6 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart } = useCart();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
   const rawImages = product.images && product.images.length > 0 ? product.images : [product.image];
   const images = rawImages.filter((img): img is string => typeof img === 'string' && img.length > 0);
   const currentImage = images[currentImageIndex] || '';
@@ -25,7 +24,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const nextImage = (e: React.MouseEvent) => {
     e.preventDefault();
     if (images.length > 1) {
-      setIsLoaded(false); // Reset loading state for new image
       setCurrentImageIndex((prev) => (prev + 1) % images.length);
     }
   };
@@ -33,7 +31,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const prevImage = (e: React.MouseEvent) => {
     e.preventDefault();
     if (images.length > 1) {
-      setIsLoaded(false); // Reset loading state for new image
       setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
     }
   };
@@ -42,31 +39,20 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <div className="group flex flex-col h-full bg-transparent">
       {/* Image Container - Minimalist Square/Portrait with Slider */}
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
-        {/* Loading Skeleton */}
-        {!isLoaded && cleanImage && (
-          <div className="absolute inset-0 z-10 animate-pulse bg-white/5 flex items-center justify-center">
-             <div className="text-[8px] uppercase tracking-[0.5em] text-white/10 italic">RETRIEVING...</div>
-          </div>
-        )}
-
         <Link href={`/product/${product._id}`} className="block w-full h-full">
           {cleanImage ? (
             <img
               src={cleanImage}
               alt={product.name}
-              className={`w-full h-full object-cover transition-all duration-1000 ease-out group-hover:scale-105 ${isLoaded ? 'opacity-100 blur-0' : 'opacity-0 blur-lg'}`}
+              className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
               loading="lazy"
               referrerPolicy="no-referrer"
-              onLoad={() => {
-                console.log('Successfully loaded image:', cleanImage);
-                setIsLoaded(true);
-              }}
+              onLoad={() => console.log('Successfully loaded image:', cleanImage)}
               onError={(e) => {
                 console.error('FAILED TO LOAD IMAGE:', cleanImage);
                 const target = e.target as HTMLImageElement;
                 if (!target.src.includes('placeholder')) {
                   target.src = 'https://placehold.co/600x800/000000/FFFFFF?text=IMAGE+ERROR';
-                  setIsLoaded(true);
                 }
               }}
             />
