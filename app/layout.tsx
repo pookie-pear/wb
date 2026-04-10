@@ -15,8 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TechStore - Best Gadgets Online",
-  description: "A full-fledged shopping website for tech gadgets",
+  title: "DENIM ARCHIVE",
+  description: "Curated collection of rare denim pieces.",
+  referrer: 'no-referrer',
 };
 
 export default function RootLayout({
@@ -26,9 +27,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <head>
-        <meta name="referrer" content="no-referrer" />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#020202] text-white min-h-screen`}
       >

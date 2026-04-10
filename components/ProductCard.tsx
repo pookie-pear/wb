@@ -41,15 +41,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
         <Link href={`/product/${product._id}`} className="block w-full h-full">
           {cleanImage ? (
-            <Image
+            <img
               src={cleanImage}
               alt={product.name}
-              fill
-              unoptimized
-              className="object-cover transition-all duration-700 ease-out group-hover:scale-105"
-              priority={currentImageIndex === 0}
+              className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+              onLoad={() => console.log('Successfully loaded image:', cleanImage)}
               onError={(e) => {
-                console.error('Image load error for:', cleanImage);
+                console.error('FAILED TO LOAD IMAGE:', cleanImage);
+                const target = e.target as HTMLImageElement;
+                if (!target.src.includes('placeholder')) {
+                  target.src = 'https://placehold.co/600x800/000000/FFFFFF?text=IMAGE+ERROR';
+                }
               }}
             />
           ) : (
