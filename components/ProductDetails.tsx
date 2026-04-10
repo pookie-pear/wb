@@ -47,13 +47,11 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
       <div className="flex flex-col space-y-4">
         <div className="relative aspect-[4/5] w-full bg-[#0a0a0a] border border-white/5 overflow-hidden">
           {currentImage ? (
-            <Image
-              src={currentImage}
+            <img
+              src={currentImage.trim().replace(/^`+|`+$/g, '')}
               alt={product.name}
-              fill
-              unoptimized
-              className="object-cover"
-              priority
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-[10px] uppercase tracking-widest text-white/20">
@@ -74,12 +72,12 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                 }`}
               >
                 {img ? (
-                  <Image
-                    src={img}
+                  <img
+                    src={img.trim().replace(/^`+|`+$/g, '')}
                     alt={`${product.name} view ${idx + 1}`}
-                    fill
-                    unoptimized
-                    className="object-cover"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
                   />
                 ) : (
                   <div className="w-full h-full bg-white/5" />

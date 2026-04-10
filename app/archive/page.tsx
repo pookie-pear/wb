@@ -43,14 +43,14 @@ export default async function ArchivePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-16 gap-y-32">
             {olderDesigns.slice(0, 8).map(p => (
               <Link key={p._id as unknown as string} href={`/product/${p._id}`} className="group block">
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a] border border-white/5">
                   {p.image ? (
-                    <Image 
-                      src={p.image} 
+                    <img 
+                      src={p.image.trim().replace(/^`+|`+$/g, '')} 
                       alt={p.name} 
-                      fill 
-                      unoptimized
-                      className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[8px] uppercase tracking-widest text-white/20">
@@ -72,14 +72,14 @@ export default async function ArchivePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-16 gap-y-32">
             {highDemand.map(p => (
               <Link key={p._id as unknown as string} href={`/product/${p._id}`} className="group block">
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a] border border-white/5">
                   {p.image ? (
-                    <Image 
-                      src={p.image} 
+                    <img 
+                      src={p.image.trim().replace(/^`+|`+$/g, '')} 
                       alt={p.name} 
-                      fill 
-                      unoptimized
-                      className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[8px] uppercase tracking-widest text-white/20">
@@ -101,14 +101,14 @@ export default async function ArchivePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-16 gap-y-32">
             {runningOut.map(p => (
               <Link key={p._id as unknown as string} href={`/product/${p._id}`} className="group block">
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a]">
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#0a0a0a] border border-white/5">
                   {p.image ? (
-                    <Image 
-                      src={p.image} 
+                    <img 
+                      src={p.image.trim().replace(/^`+|`+$/g, '')} 
                       alt={p.name} 
-                      fill 
-                      unoptimized
-                      className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[8px] uppercase tracking-widest text-white/20">
