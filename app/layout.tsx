@@ -15,9 +15,30 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DENIM ARCHIVE",
-  description: "Curated collection of rare denim pieces.",
+  title: "DENIM ARCHIVE | Curated Selection",
+  description: "A digital vault of rare denim pieces, signature washes, and historical fits.",
   referrer: 'no-referrer',
+  openGraph: {
+    title: 'DENIM ARCHIVE',
+    description: 'A digital vault of rare denim pieces, signature washes, and historical fits.',
+    url: 'https://buy-jens.onrender.com',
+    siteName: 'DENIM ARCHIVE',
+    images: [
+      {
+        url: 'https://i.ibb.co/QwqRbG3/uma-musume-mambo.png', // Using the golden link as the default OG image
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'DENIM ARCHIVE',
+    description: 'A digital vault of rare denim pieces, signature washes, and historical fits.',
+    images: ['https://i.ibb.co/QwqRbG3/uma-musume-mambo.png'],
+  },
 };
 
 export default function RootLayout({
